@@ -1,3 +1,5 @@
+with open('README.md', encoding='utf-8') as file:
+    readme = file.read()
 
 from distutils.core import setup
 setup(
@@ -5,7 +7,10 @@ setup(
   packages = ['bleuper'],
   version = '0.1',
   license='MIT',
-  description = 'A simple lightweight library for computing BLEU scores',author = 'Shuvam Shah',
+  description = 'A simple lightweight library for computing BLEU scores',
+  long_description = readme,
+  long_description_content_type='text/markdown',
+  author = 'Shuvam Shah',
   author_email = 'shuvamkshah28@gmail.com',
   url = 'https://github.com/shvms/bleuper',
   download_url = 'https://github.com/shvms/bleuper/archive/v0.1-alpha.tar.gz',

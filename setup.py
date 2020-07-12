@@ -8,7 +8,7 @@ setup(
   description = 'A simple lightweight library for computing BLEU scores',author = 'Shuvam Shah',
   author_email = 'shuvamkshah28@gmail.com',
   url = 'https://github.com/shvms/bleuper',
-  download_url = 'https://github.com/shvms/bleuper/archive/v_01.tar.gz',
+  download_url = 'https://github.com/shvms/bleuper/archive/v0.1-alpha.tar.gz',
   keywords = ['BLEU', 'machine-translation', 'nlp', 'baseline'],
   install_requires=[],
   classifiers=[

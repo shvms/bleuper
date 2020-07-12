@@ -35,14 +35,14 @@ class TestBLEU:
   
   def test_refs(self):
     b = BLEU(refs=[TestBLEU.helper_get_tokens(pytest.refs[12]['text']), TestBLEU.helper_get_tokens(pytest.refs[13]['text'])],
-             weights={1: 0.25, 2: 0.25, 3: 0.25, 4: 0.25})
+             weights={1: 0.25, 2: 0.25, 3: 0.25, 4: 0.25}, suppress_warnings=True)
     assert type(b.refs[0]) == Sentence
   
   def test_closest_ref(self):
     b = BLEU(refs=[TestBLEU.helper_get_tokens(pytest.refs[12]['text']),
                    TestBLEU.helper_get_tokens(pytest.refs[13]['text'])],
-                   weights={1: 0.25, 2: 0.25, 3: 0.25, 4: 0.25})
-    src = Sentence(TestBLEU.helper_get_tokens(pytest.trans[13]['text']), ngrams=[1])
+                   weights={1: 0.25, 2: 0.25, 3: 0.25, 4: 0.25}, suppress_warnings=True)
+    src = Sentence(TestBLEU.helper_get_tokens(pytest.trans[13]['text']), [1])
     assert b.find_closest_ref(src).text == pytest.refs[13]['text']
   
   @pytest.mark.parametrize("case", pytest.core)
@@ -54,7 +54,7 @@ class TestBLEU:
       3: pytest.weights[case['weight']]['weight'][2],
       4: pytest.weights[case['weight']]['weight'][3]
     }
-    b = BLEU(refs, weights)
+    b = BLEU(refs, weights, suppress_warnings=True)
     
     src = TestBLEU.helper_get_tokens(pytest.trans[case['trans']]['text'])
     

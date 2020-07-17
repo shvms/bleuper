@@ -3,6 +3,7 @@ import warnings
 from typing import List, Dict
 
 from .sentence import Sentence
+from .function import Function
 
 class BLEU:
   """
@@ -42,13 +43,27 @@ class BLEU:
     """
     if weights is None:
       weights = self.default_wt
-    assert len(refs) > 1, "Must pass at least one reference sentence"
+    assert len(refs) >= 1, "Must pass at least one reference sentence"
     assert False not in (True if 1 <= n <= 4 else False for n in weights), "Only 1, 2, 3, 4-grams supported"
     assert sum(weights.values()) == 1, "All weights should sum to 1"
     
     self.refs = [Sentence(ref, list(weights.keys())) for ref in refs]
     self.weights = {k: v for (k, v) in weights.items() if v > 1e-6}
     self.suppress_warnings = suppress_warnings
+  
+  def compute_precision(self, source: Sentence, smoothing: Function = None) -> Dict[int, float]:
+    precision = dict()
+  
+    # computing modified n-gram precision values
+    for n in self.weights.keys():  # iterating over n-grams
+      denom = sum(source.counters[n].values())
+    
+      numer = sum(
+        min(max(r_i.counters[n][gram] for r_i in self.refs), source.counters[n][gram]) for gram in
+        source.counters[n].keys())
+      precision[n] = numer / denom
+    
+    return precision
   
   def find_closest_ref(self, src: Sentence):
     min_dist = abs(len(src) - len(self.refs[0]))
@@ -74,16 +89,8 @@ class BLEU:
     """
     
     source = Sentence(c, list(self.weights.keys()))
-    precision = dict()
     
-    # computing modified n-gram precision values
-    for n in self.weights.keys():  # iterating over n-grams
-      denom = sum(source.counters[n].values())
-      
-      numer = sum(
-        min(max(r_i.counters[n][gram] for r_i in self.refs), source.counters[n][gram]) for gram in
-        source.counters[n].keys())
-      precision[n] = numer / denom
+    precision = self.compute_precision(source)
     
     # finding closest reference
     len_closest_ref = len(self.find_closest_ref(source))

@@ -23,37 +23,32 @@ class TestBLEU:
   
   def test_refs_length_constraints(self):
     with pytest.raises(AssertionError):
-      BLEU([], {1: 0.5, 2: 0.5})
+      BLEU([], (0.5, 0.5, 0, 0,))
   
   def test_ngrams_constraints(self):
     with pytest.raises(AssertionError):
-      BLEU([["hello", "world"]], {1: 0.25, 2: 0.25, 3: 0.15, 4: 0.15, 5: 0.2})
+      BLEU([["hello", "world"]], (0.25, 0.25, 0.15, 0.15, 0.2,))
   
   def test_weights_constraints(self):
     with pytest.raises(AssertionError):
-      BLEU([["hello", "world"]], {1: 0.5, 3: 0.6})
+      BLEU([["hello", "world"]], (0.5, 0, 0.6, 0,))
   
   def test_refs(self):
     b = BLEU(refs=[TestBLEU.helper_get_tokens(pytest.refs[12]['text']), TestBLEU.helper_get_tokens(pytest.refs[13]['text'])],
-             weights={1: 0.25, 2: 0.25, 3: 0.25, 4: 0.25}, suppress_warnings=True)
+             weights=(0.25, 0.25, 0.25, 0.25,), suppress_warnings=True)
     assert type(b.refs[0]) == Sentence
   
   def test_closest_ref(self):
     b = BLEU(refs=[TestBLEU.helper_get_tokens(pytest.refs[12]['text']),
                    TestBLEU.helper_get_tokens(pytest.refs[13]['text'])],
-                   weights={1: 0.25, 2: 0.25, 3: 0.25, 4: 0.25}, suppress_warnings=True)
-    src = Sentence(TestBLEU.helper_get_tokens(pytest.trans[13]['text']), [1])
+                   weights=(0.25, 0.25, 0.25,0.25,), suppress_warnings=True)
+    src = Sentence(TestBLEU.helper_get_tokens(pytest.trans[13]['text']), (1,))
     assert b.find_closest_ref(src).text == pytest.refs[13]['text']
   
   @pytest.mark.parametrize("case", pytest.core)
   def test_compute_score(self, case):
     refs = [TestBLEU.helper_get_tokens(pytest.refs[idx]['text']) for idx in case['ref']]
-    weights = {
-      1: pytest.weights[case['weight']]['weight'][0],
-      2: pytest.weights[case['weight']]['weight'][1],
-      3: pytest.weights[case['weight']]['weight'][2],
-      4: pytest.weights[case['weight']]['weight'][3]
-    }
+    weights = tuple(pytest.weights[case['weight']]['weight'])
     b = BLEU(refs, weights, suppress_warnings=True)
     
     src = TestBLEU.helper_get_tokens(pytest.trans[case['trans']]['text'])

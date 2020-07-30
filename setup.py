@@ -5,7 +5,7 @@ from distutils.core import setup
 setup(
   name = 'bleuper',
   packages = ['bleuper'],
-  version = '0.1',
+  version = '0.2',
   license='MIT',
   description = 'A simple lightweight library for computing BLEU scores',
   long_description = readme,
@@ -13,7 +13,7 @@ setup(
   author = 'Shuvam Shah',
   author_email = 'shuvamkshah28@gmail.com',
   url = 'https://github.com/shvms/bleuper',
-  download_url = 'https://github.com/shvms/bleuper/archive/v0.1-alpha.tar.gz',
+  download_url = 'https://github.com/shvms/bleuper/archive/v0.2-alpha.tar.gz',
   keywords = ['BLEU', 'machine-translation', 'nlp', 'baseline'],
   install_requires=[],
   classifiers=[

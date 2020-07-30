@@ -10,15 +10,15 @@ class Sentence:
   text: List[str]
     list of tokens forming sentence
   ngrams_list: List[int]
-    list of integers representing n-grams to maintain
+    tuple of integers representing n-grams to maintain
   counters: Dict[int, Counter]
     dictionary of Counter objects for each n-gram (key).
   
   Example
   -------
-  sent = Sentence(["I", "spent", "all", "my", "day", "watching", "netflix"], (1,2))
+  sent = Sentence(["I", "spent", "all", "my", "day", "watching", "netflix"], (1,2,))
   """
-  def __init__(self, text: List[str], ngrams_list: List[int]):
+  def __init__(self, text: List[str], ngrams_list: Tuple[int, ...]):
     """
     :param text: list of tokens forming sentence
     :param ngrams_list: list of integers representing n-grams to maintain
@@ -45,10 +45,10 @@ class Sentence:
     """
     return [tuple(tokens[i:i + n]) for i in range(len(tokens) - n + 1)]
   
-  def __generateCounters(self, ngrams_list: List[int]):
+  def __generateCounters(self, ngrams_list: Tuple[int, ...]):
     """
     Generates counters
-    :param ngrams_list: list of integers representing n-grams to maintain
+    :param ngrams_list: tuple of integers representing n-grams to maintain
     :return:
     """
     for n in ngrams_list:

@@ -3,8 +3,8 @@ from bleuper import Sentence
 class TestSentence:
   text1 = "five am trains broken chains i called you every afternoon"
   text2 = "forrest gump and hurricane trails though we never followed through"
-  sent1 = Sentence(text1.split(), [1, 2])
-  sent2 = Sentence(text2.split(), [1, 2, 3, 4])
+  sent1 = Sentence(text1.split(), (1, 2,))
+  sent2 = Sentence(text2.split(), (1, 2, 3, 4,))
   
   def test_tokens(self):
     assert self.sent1.tokens == self.text1.split()

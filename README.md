@@ -1,5 +1,9 @@
 # bleuper
 A simple lightweight library to help you easily compute BLEU scores.
+
+## Install
+`pip install bleuper`
+
 ## Usage
 ```python
 from bleuper import BLEU

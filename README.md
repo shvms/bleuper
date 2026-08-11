@@ -1,4 +1,6 @@
 # bleuper
+[![Tests](https://github.com/shvms/bleuper/actions/workflows/tests.yml/badge.svg)](https://github.com/shvms/bleuper/actions/workflows/tests.yml)
+
 A simple lightweight library to help you easily compute BLEU scores.
 
 ## Install

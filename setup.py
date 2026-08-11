@@ -17,8 +17,8 @@ DESCRIPTION = 'A simple lightweight library for computing BLEU scores'
 URL = 'https://github.com/shvms/bleuper'
 EMAIL = 'shvms@outlook.com'
 AUTHOR = 'Shuvam Shah'
-REQUIRES_PYTHON = '>=3.5.0'
-VERSION = '0.2'
+REQUIRES_PYTHON = '>=3.8.0'
+VERSION = '0.3'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
